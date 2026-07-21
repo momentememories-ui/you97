@@ -104,26 +104,27 @@
         }
         .final-msg-wrapper {
             position: relative;
-            max-width: 85%;
+            max-width: 90%;
             width: 340px;
-            margin-top: 50px; /* เพิ่มพื้นที่ด้านบนเพื่อให้สติ๊กเกอร์ยื่นออกไปได้ */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .final-sticker {
-            position: absolute;
-            top: -70px; /* ขยับขึ้นด้านบน */
-            left: 50%;
-            transform: translateX(-50%); /* จัดตำแหน่งให้อยู่กึ่งกลางแนวนอน */
-            width: 140px; /* ขยายขนาดสติ๊กเกอร์ให้ใหญ่ขึ้น */
+            width: 280px; /* ขยายสติ๊กเกอร์ให้ใหญ่เกือบเท่ากล่องข้อความ */
             height: auto;
             z-index: 210;
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
             pointer-events: none;
+            margin-bottom: -20px; /* ให้เกยขอบบนกล่องข้อความเล็กน้อยพอสวยงาม ไม่บังตัวหนังสือ */
         }
         .final-msg-box {
-            position: relative; z-index: 205; text-align: center; padding: 45px 25px 35px 25px; /* เพิ่ม Padding ด้านบนหลบสติ๊กเกอร์ */
+            position: relative; z-index: 205; text-align: center; padding: 30px 25px;
             background: white; border-radius: 20px; box-shadow: 0 15px 40px rgba(255, 92, 138, 0.2);
             transform: scale(0.8) translateY(30px); opacity: 0;
             transition: all 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            width: 100%;
+            box-sizing: border-box;
         }
         .final-msg-container.show-final { opacity: 1; pointer-events: auto; }
         .final-msg-container.show-final .final-msg-box { transform: scale(1) translateY(0); opacity: 1; }
@@ -177,6 +178,7 @@
 
     <div class="final-msg-container" id="finalMsgContainer">
         <div class="final-msg-wrapper">
+            <!-- ย้ายรูปไว้ข้างบนกล่องข้อความอย่างสมบูรณ์ -->
             <img src="photo2.png" class="final-sticker" alt="Sticker">
             <div class="final-msg-box">
                 <p>
