@@ -48,10 +48,13 @@
         .active { display: flex; }
 
         /* --- PAGE 1: ENVELOPE --- */
-        .chase-area { position: relative; width: 100%; height: 100%; }
+        .chase-area { 
+            position: relative; width: 100%; height: 100%; 
+            display: flex; justify-content: center; align-items: center;
+        }
         .flying-envelope {
-            position: absolute; width: 140px; height: 90px;
-            cursor: pointer; z-index: 20; transition: transform 0.2s ease-out;
+            position: relative; width: 140px; height: 90px;
+            cursor: pointer; z-index: 20;
         }
         .env-body {
             position: relative; z-index: 2; font-size: 6rem; line-height: 1;
@@ -138,7 +141,7 @@
         }
     </style>
 </head>
-<body onclick="playAudio()">
+<body onclick="startExperience()">
 
     <audio id="bgm" loop><source src="song.mp3" type="audio/mpeg"></audio>
     <div class="bg-floaters" id="bgFloaters"></div>
@@ -146,7 +149,7 @@
     <div id="page1" class="page active">
         <div class="chase-area">
             <h2 style="text-align:center; margin-top:100px; color:var(--accent);"></h2>
-            <div class="flying-envelope" id="envelope" onmouseover="moveEnv()" ontouchstart="moveEnvMobile(event)">
+            <div class="flying-envelope" id="envelope">
                 <div class="wing left"></div><div class="env-body">💌</div><div class="wing right"></div>
             </div>
         </div>
@@ -195,11 +198,16 @@
 
     <script>
         let audioPlaying = false;
-        function playAudio() {
+        function startExperience() {
+            // เล่นเพลงเมื่อแตะหน้าจอครั้งแรก
             if(!audioPlaying) {
                 document.getElementById('bgm').play().catch(()=>{});
                 audioPlaying = true;
-                document.querySelector('.music-hint').style.display = 'none';
+            }
+            // ถ้าอยู่หน้าแรก แล้วมีการแตะ ให้ข้ามไปหน้า 2 ทันที
+            const page1 = document.getElementById('page1');
+            if (page1.classList.contains('active')) {
+                goTo('page2');
             }
         }
         
@@ -230,21 +238,6 @@
                 if(id==='page3') startScratch();
             }, 500);
         }
-
-        // หน้า 1 Logic
-        const env = document.getElementById('envelope');
-        function moveEnv() {
-            const x = Math.random() * (window.innerWidth - 150);
-            const y = Math.random() * (window.innerHeight - 150);
-            env.style.left = x + 'px'; env.style.top = y + 'px';
-        }
-        let touches = 0;
-        function moveEnvMobile(e) {
-            touches++;
-            if(touches < 4) { e.preventDefault(); moveEnv(); }
-            else { goTo('page2'); }
-        }
-        env.onclick = () => goTo('page2');
 
         // หน้า 2 Logic (เพิ่มทีละ 1%)
         let heartPercent = 0;
